@@ -1,0 +1,13 @@
+extends ../layouts/default.pug
+
+block page-header
+  h2 Login
+
+block content
+    form(action="/login/password" method="POST")
+        p email:
+            input(type="text" name="email" placeholder="" required)
+        p password:
+            input(type="password" name="password" placeholder="" required)
+            input(type="hidden" name="_csrf" value=token) 
+        input(type="submit")

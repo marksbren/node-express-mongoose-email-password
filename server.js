@@ -42,7 +42,7 @@ fs.readdirSync(models)
 // Bootstrap routes
 require('./config/passport')(passport);
 require('./config/express')(app, passport);
-require('./config/routes')(app, passport);
+require('./config/routes/main')(app, passport);
 
 connection
   .on('error', console.log)

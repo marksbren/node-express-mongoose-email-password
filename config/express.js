@@ -91,6 +91,8 @@ module.exports = function(app, passport) {
       proxy: true,
       resave: true,
       saveUninitialized: true,
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
       store: new mongoStore({
         url: config.db,
         collection: 'sessions'
