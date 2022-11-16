@@ -1,28 +1,15 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
-
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-const home = require('../../app/controllers/home');
 const login = require('../../app/controllers/login');
 const signup = require('../../app/controllers/signup');
 const User = mongoose.model('User');
 
-
 const crypto = require('crypto');
-const { userInfo } = require('os');
-
-
-/**
- * Expose
- */
 
 module.exports = function(app) {
-  app.get('/', home.index);
 
   /**
    * Authentication
@@ -31,20 +18,16 @@ module.exports = function(app) {
   app.get('/login', function(req, res, next) {
     res.render('login',{ token: req.csrfToken() });
   });
-
+  
   app.post('/login/password', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login'
   }));
-
+  
   app.get('/logout', function(req, res, next) {
     req.session.destroy(function (err) {
       res.redirect('/'); //Inside a callback… bulletproof!
     });
-    // req.logout(function(err) {
-    //   if (err) { return next(err); }
-    //   res.redirect('/');
-    // });
   });
 
   app.get('/signup', function(req, res, next) {
@@ -71,29 +54,4 @@ module.exports = function(app) {
     });
   });
 
-  /**
-   * Error handling
-   */
-
-  app.use(function(err, req, res, next) {
-    // treat as 404
-    if (
-      err.message &&
-      (~err.message.indexOf('not found') ||
-        ~err.message.indexOf('Cast to ObjectId failed'))
-    ) {
-      return next();
-    }
-    console.error(err.stack);
-    // error page
-    res.status(500).render('500', { error: err.stack });
-  });
-
-  // assume 404 since no middleware responded
-  app.use(function(req, res) {
-    res.status(404).render('404', {
-      url: req.originalUrl,
-      error: 'Not found'
-    });
-  });
-};
+}
