@@ -15,6 +15,7 @@ const { userInfo } = require('os');
 module.exports = function(app) {
   //Other routes
   require('./auth')(app);
+  require('./account')(app);
 
   
   app.get('/', home.index);

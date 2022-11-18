@@ -7,6 +7,9 @@ const login = require('../../app/controllers/login');
 const signup = require('../../app/controllers/signup');
 const User = mongoose.model('User');
 
+const { sendMail } = require('../../app/mailers/forgot-email')
+
+
 const crypto = require('crypto');
 
 module.exports = function(app) {
@@ -16,6 +19,7 @@ module.exports = function(app) {
    */
 
   app.get('/login', function(req, res, next) {
+    sendMail("marksbren@gmail.com","Mark","1234");
     res.render('login',{ token: req.csrfToken() });
   });
   
